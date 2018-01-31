@@ -6,7 +6,7 @@
 
 ### create virtual venv
 
-`virtualenv -p python3 envname`
+`virtualenv -p python3 venv`
 
 [ if error try ]
 ```
