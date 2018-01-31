@@ -1,0 +1,250 @@
+{% load i18n static %}{% load assets %}{% load menu %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:" en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>{% block title %}{% endblock %}</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- Bootstrap core CSS     -->
+    <link href="{% static 'admin/css/bootstrap.min.css' %}" rel="stylesheet" />
+
+    <!--  Light Bootstrap Dashboard core CSS    -->
+    <link href="{% static 'admin/css/light-bootstrap-dashboard.css' %}" rel="stylesheet"/>
+
+    <link href="{% static 'admin/css/mnq.css' %}" rel="stylesheet" />
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href="{% static 'admin/css/pe-icon-7-stroke.css' %}" rel="stylesheet" />
+
+    {% block extrastyle %}{% endblock %}
+    {% if LANGUAGE_BIDI %}
+    <link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}"/>{% endif %}
+    {% autoescape off %}{% css %}{% endautoescape %}
+    {% block extrahead %}{% endblock %}
+    {% block blockbots %}
+    <meta name="robots" content="NONE,NOARCHIVE"/>
+    {% endblock %}
+</head>
+{% load i18n %}
+
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now " Z" %}">
+
+<div class="wrapper">
+    <div class="sidebar" data-color="azure" data-image="{% static 'admin/img/full-screen-image-3.jpg' %}">
+        <!--
+
+            Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+            Tip 2: you can also add an image using data-image tag
+
+        -->
+
+        <div class="logo">
+            <a href="{% url 'admin:index' %}" class="logo-text">M&Q Administration</a>
+        </div>
+		<div class="logo logo-mini">
+			<a href="{% url 'admin:index' %}" class="logo-text">M&Q</a>
+		</div>
+
+    	<div class="sidebar-wrapper">
+
+            <div class="user">
+                <div class="photo">
+                    <img src="{% static 'img/logo.svg' %}" />
+                </div>
+            </div>
+
+            <ul class="nav">
+                {% autoescape off %}{% menu %}{% endautoescape %}
+                {% comment %}{% if available_apps %}
+                {% for app in available_apps %}
+                <li>
+                    <a data-toggle="collapse" href="#nav-{{ app.name }}">
+                        {{ app.name }} <b class="caret"></b>
+                    </a>
+
+                    <div class="collapse" id="nav-{{ app.name }}">
+                        <ul class="nav">
+                            {% for model in app.models %}
+                                {% if model.admin_url %}
+                                    <li>
+                                        <a href="{{ model.admin_url }}">{{ model.name }}</a>
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        <a href="{{ model.admin_url }}">{{ model.name }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </li>
+                {% endfor %}
+                {% endif %}{% endcomment %}
+            </ul>
+    	</div>
+    </div>
+
+<div class="main-panel">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+				<div class="navbar-minimize">
+					<button id="minimizeSidebar" class="btn btn-warning btn-fill btn-round btn-icon">
+						<i class="fa fa-ellipsis-v visible-on-sidebar-regular"></i>
+						<i class="fa fa-navicon visible-on-sidebar-mini"></i>
+					</button>
+				</div>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">
+                        {% block pretitle %}{% endblock %}
+                        {% block content_title %}{% if title %}{{ title }}{% endif %}{% endblock %}
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse">
+
+                    <form class="navbar-form navbar-left navbar-search-form" role="search">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                            <input type="text" id="search-menu" name="q" class="form-control" placeholder="Search..." autocomplete="off">
+                        </div>
+                    </form>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-line-chart"></i>
+                                <p>Reports</p>
+                            </a>
+                        </li>
+
+
+                        <li class="dropdown dropdown-with-icons">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-user-circle"></i>
+                                <p>
+    								{% firstof user.get_short_name user.get_username %}
+    								<b class="caret"></b>
+    							</p>
+                            </a>
+                            <ul class="dropdown-menu dropdown-with-icons">
+                                <li>
+                                    <a href="{% url 'admin:password_change' %}">
+                                        <i class="pe-7s-lock"></i> Change Password
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'admin:logout' %}" class="text-danger">
+                                        <i class="pe-7s-close-circle"></i>
+                                        Log out
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="content">
+                <div class="container-fluid">
+                    <div class="content content-full-width">
+                        <div class="card">
+                            {% block breadcrumbs %}
+                            <ol class="breadcrumb">
+                                 <li><a href="{% url 'admin:index' %}"><i class="fa fa-dashboard"></i> {% trans 'Home' %}</a></li>
+                                {% if title %} &rsaquo; {{ title }}{% endif %}
+                            </ol>
+                            {% endblock %}
+                        </div>
+                    </div>
+                    {% block content %}
+                        {% block object-tools %}{% endblock %}
+                        {{ content }}
+                    {% endblock %}
+                    {% block sidebar %}{% endblock %}
+            </div>
+        </div>
+
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <p class="copyright pull-right">
+                    Design & Developed by: <a href="http://www.itsd.com.bd">ITSD</a>
+                </p>
+            </div>
+        </footer>
+
+    </div>
+</div>
+    <!--   Core JS Files and PerfectScrollbar library inside jquery.ui   -->
+    <script src = "{% static 'admin/js/jquery.min.js' %}" type="text/javascript"></script>
+    <script src = "{% static 'admin/js/jquery-ui.min.js' %}" type="text/javascript"></script>
+	<script src = "{% static 'admin/js/bootstrap.min.js' %}" type="text/javascript"></script>
+
+
+	<!--  Forms Validations Plugin -->
+	<script src = "{% static 'admin/js/jquery.validate.min.js' %}"></script>
+
+	<!--  Plugin for Date Time Picker and Full Calendar Plugin-->
+	<script src = "{% static 'admin/js/moment.min.js' %}"></script>
+
+    <!--  Date Time Picker Plugin is included in this js file -->
+    <script src = "{% static 'admin/js/bootstrap-datetimepicker.js' %}"></script>
+
+    <!--  Select Picker Plugin -->
+    <script src = "{% static 'admin/js/bootstrap-selectpicker.js' %}"></script>
+
+	<!--  Checkbox, Radio, Switch and Tags Input Plugins -->
+	<script src = "{% static 'admin/js/bootstrap-checkbox-radio-switch-tags.js' %}"></script>
+
+	<!--  Charts Plugin -->
+	<script src = "{% static 'admin/js/chartist.min.js' %}"></script>
+
+    <!--  Notifications Plugin    -->
+    <script src = "{% static 'admin/js/bootstrap-notify.js' %}"></script>
+
+    <!-- Sweet Alert 2 plugin -->
+	<script src = "{% static 'admin/js/sweetalert2.js' %}"></script>
+
+    <!-- Vector Map plugin -->
+	<script src = "{% static 'admin/js/jquery-jvectormap.js' %}"></script>
+
+    <!--  Google Maps Plugin    -->
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+
+	<!-- Wizard Plugin    -->
+    <script src = "{% static 'admin/js/jquery.bootstrap.wizard.min.js' %}"></script>
+
+    <!--  bootstrap Table Plugin    -->
+    <script src = "{% static 'admin/js/bootstrap-table.js' %}"></script>
+
+	<!--  Plugin for DataTables.net  -->
+    <script src = "{% static 'admin/js/jquery.datatables.js' %}"></script>
+
+
+    <!--  Full Calendar Plugin    -->
+    <script src = "{% static 'admin/js/fullcalendar.min.js' %}"></script>
+
+    <!-- Light Bootstrap Dashboard Core javascript and methods -->
+	<script src = "{% static 'admin/js/light-bootstrap-dashboard.js' %}"></script>
+
+	<!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
+	<script src = "{% static 'admin/js/mnq.js' %}"></script>
+
+
+{% autoescape off %}{% js %}{% endautoescape %}
+{% block extrafoot %}{% endblock %}
+
+</body>
+</html>

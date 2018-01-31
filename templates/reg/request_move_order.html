@@ -1,0 +1,62 @@
+{% extends 'reg.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+    <div class="wrapper">
+        <div class="container registration-in-out">
+            <div class="row">
+                <div class="col-sm-6">
+                    <img src="{% static 'img/logo.svg' %}" class="army-logo">
+                </div>
+                <div class="col-sm-6">
+                    <h1 class="mnq-heading">M&Q Directorate Bangladesh Army HQ</h1>
+                </div>
+            </div>
+            <div class="row">
+                <form method="post" role="form">
+                    {% csrf_token %}
+                    <div class="col-sm-6">
+                        <h3>Please insert the following information for move order</h3>
+
+                        {% for field in form %}
+                            <div class="form-group">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+                        <div class="form-group">
+                            <input type="hidden" name="outbound" value="{{ outbound }}">
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-sm-offset-1">
+                        <h1 class="mnq-heading">M&Q Directorate Bangladesh Army HQ</h1>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Submit move order request</button>
+                            <a class="btn btn-danger pull-right" href="/">Cancel and exit</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% if error %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1 class="text-danger">{{ error }}</h1>
+                    </div>
+                    <div class="col-sm-6">
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $('#id_date_of_move').datepicker({
+                format: "mm/dd/yyyy",
+                minDate: 0
+            });
+        });
+    </script>
+{% endblock %}

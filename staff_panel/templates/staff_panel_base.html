@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% include 'staff_panel_head.html' %}
+    {% block extrahead %}
+
+    {% endblock %}
+</head>
+<body>
+
+<div class="wrapper">
+
+    {% include 'staff_panel_main_menubar.html' %}
+
+
+    <div class="main-panel">
+        {% include 'staff_panel_topnavbar.html' %}
+
+        <div class="content">
+            <div class="container-fluid">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+
+        {% include 'staff_panel_footer.html' %}
+
+    </div>
+</div>
+</body>
+
+{% include 'staff_panel_js.html' %}
+
+{% block script %}
+
+{% endblock %}
+
+</html>

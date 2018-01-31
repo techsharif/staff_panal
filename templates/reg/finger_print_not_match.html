@@ -1,0 +1,35 @@
+{% extends 'reg.html' %}
+{% load static %}
+
+{% block extrahead %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        <div class="container margin-top-class">
+            <div class="row">
+                <div class="col-sm-8">
+                    <img src="{% static 'img/logo.svg' %}" class="army-logo">
+                </div>
+                <div class="col-sm-4">
+                    <h1>M&Q Directorate Bangladesh Army HQ</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    &nbsp;&nbsp;&nbsp;
+                    <h2 class="text-danger text-left">Sorry your fingerprint didn't match !</h2>
+                    <h2 class="text-danger text-left">Try again by placing your right index finger on scanner.</h2>
+                    <!--Will apply "Sorry too many retries ! Please ask for support." in case of more than 5 try-->
+                </div>
+                <div class="col-sm-4">
+                    <img src="{% static 'img/finger.jpg' %}" class="army-fingerprint">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

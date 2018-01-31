@@ -1,0 +1,221 @@
+{% extends 'reg.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block extrahead %}
+    <!--Jquery datetime picker css-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css">
+    <style>
+        hr {
+            display: block;
+            height: 1px;
+            background: transparent;
+            width: 100%;
+            border: none;
+            border-top: solid 1px #aaa;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        <div class="container registration-in-out">
+            <div class="row">
+                <div class="col-sm-6">
+                    <img src="{% static 'img/logo.svg' %}" class="army-logo">
+                </div>
+                <div class="col-sm-6">
+                    <h1 class="mnq-heading">M&Q Directorate Bangladesh Army HQ</h1>
+                </div>
+            </div>
+            <div class="row">
+                <h1 class="text-center">Please insert assignment information (Army number: {{ number }})</h1>
+            </div>
+            <hr>
+            <div class="row">
+                <form action="" method="post" role="form">
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label"
+                               for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                        <div class="col-sm-9">
+                            {{ form.name.errors }}
+                            {{ form.name }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label"
+                               for="{{ form.assignment_type.id_for_label }}">{{ form.assignment_type.label }}</label>
+                        <div class="col-sm-9">
+                            {{ form.assignment_type.errors }}
+                            {{ form.assignment_type }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label"
+                               for="{{ form.go_no.id_for_label }}">{{ form.go_no.label }}</label>
+                        <div class="col-sm-9">
+                            {{ form.go_no.errors }}
+                            {{ form.go_no }}
+                        </div>
+                    </div>
+                    <div class="form-group row" style="display: none" id="div-proceeding-country">
+                        <label class="col-sm-3 form-control-label"
+                               for="{{ form.proceeding_country.id_for_label }}">{{ form.proceeding_country.label }}</label>
+                        <div class="col-sm-9">
+                            {{ form.proceeding_country.errors }}
+                            {{ form.proceeding_country }}
+                        </div>
+                    </div>
+                    <div class="form-group row" style="display: none" id="div-proceeding-unit">
+                        <label class="col-sm-3 form-control-label"
+                               for="{{ form.proceeding_unit.id_for_label }}">{{ form.proceeding_unit.label }}</label>
+                        <div class="col-sm-9">
+                            {{ form.proceeding_unit.errors }}
+                            {{ form.proceeding_unit }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label"
+                               for="{{ form.date_of_move.id_for_label }}">{{ form.date_of_move.label }}</label>
+                        <div class="col-sm-9">
+                            {{ form.date_of_move.errors }}
+                            {{ form.date_of_move }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label"
+                               for="{{ form.date_of_return.id_for_label }}">{{ form.date_of_return.label }}</label>
+                        <div class="col-sm-9">
+                            {{ form.date_of_return.errors }}
+                            {{ form.date_of_return }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label"
+                               for="starting-datetime">{{ form.starting_datetime.label }}</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="starting-datetime"
+                                   class="form-control datetime-pick" placeholder="Select time and date">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            {{ form.starting_datetime }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label"
+                               for="end-datetime">{{ form.end_date.label }}</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="end-datetime"
+                                   class="form-control datetime-pick" placeholder="Select time and date">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            {{ form.end_date }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label"
+                               for="{{ form.status.id_for_label }}">{{ form.status.label }}</label>
+                        <div class="col-sm-9">
+                            {{ form.status.errors }}
+                            {{ form.status }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label"
+                               for="{{ form.remarks.id_for_label }}">{{ form.remarks.label }}</label>
+                        <div class="col-sm-9">
+                            {{ form.remarks.errors }}
+                            {{ form.remarks }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group row">
+                        <a class="btn btn-danger pull-left" href="/">Cancel and exit</a>
+                        <button type="submit" name="save" class="btn btn-success pull-right">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <!--Moment JS-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <!--Datetimepicker JS-->
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            /**
+             * Format selected datetime to django approaved format
+             * @param {String} datetime
+             * @return {String} formattedDateTime
+             */
+            function dateTimeFormatter(datetime) {
+                var date = datetime.split(" ")[0].split("/"),
+                    time = datetime.split(" ")[1] + " " + datetime.split(" ")[2];
+                // Converting date to django approaved format
+                var formattedDate = date[2] + "-" + date[0] + "-" + date[1];
+                // Converting time from 12 hour to 24 hour format
+                var hours = Number(time.match(/^(\d+)/)[1]),
+                    minutes = Number(time.match(/:(\d+)/)[1]),
+                    AMPM = time.match(/\s(.*)$/)[1];
+                if (AMPM == "PM" && hours < 12) hours = hours + 12;
+                if (AMPM == "AM" && hours == 12) hours = hours - 12;
+                var sHours = hours.toString(), sMinutes = minutes.toString();
+                if (hours < 10) sHours = "0" + sHours;
+                if (minutes < 10) sMinutes = "0" + sMinutes;
+                var formattedTime = sHours + ':' + sMinutes,
+                    formattedDateTime = formattedDate + " " + formattedTime;
+
+                return formattedDateTime;
+            }
+
+            /*----Events---*/
+
+            $("input.date-pick").datepicker({
+                dateFormat: "mm/dd/yy"
+            });
+            $('input.datetime-pick').datetimepicker({
+                sideBySide: true
+            });
+            // Showing "proceeding country" and "proceeding unit" based on "Assignment type" selection
+            $("select[name='assignment_type']").change(function (e) {
+                e.preventDefault();
+                var assType = $("select[name='assignment_type'] option:selected").text();
+                if (assType == 'Mission') {
+                    // Showing proceeding unit
+                    $("div#div-proceeding-unit").show("slow");
+                } else {
+                    // Showing proceeding country
+                    $("div#div-proceeding-country").show("slow");
+                }
+            });
+            // Saving starting and ending datetime
+            $("input#starting-datetime").on("dp.change", function (e) {
+                e.preventDefault();
+                var value = $("input#starting-datetime").val();
+                if (value) {
+                    var datetime = dateTimeFormatter(value);
+                    $("input[name='starting_datetime']").val(datetime);
+                }
+            });
+            $("input#end-datetime").on("dp.change", function (e) {
+                e.preventDefault();
+                var value = $("input#end-datetime").val();
+                if (value) {
+                    var datetime = dateTimeFormatter(value);
+                    $("input[name='end_date']").val(datetime);
+                }
+            });
+        });
+    </script>
+{% endblock %}

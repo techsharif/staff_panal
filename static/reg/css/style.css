@@ -1,0 +1,102 @@
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: #000;
+    line-height: 30px;
+}
+
+strong { font-weight: 500; }
+
+a, a:hover, a:focus {
+	color: #19b9e7;
+	text-decoration: none;
+    -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s;
+}
+
+h1, h2 {
+	margin-top: 10px;
+	font-size: 38px;
+    font-weight: 100;
+    color: #555;
+    line-height: 50px;
+}
+
+h3 {
+	font-size: 22px;
+    font-weight: 300;
+    color: #555;
+    line-height: 30px;
+}
+
+img { max-width: 100%; }
+
+::-moz-selection { background: #19b9e7; color: #fff; text-shadow: none; }
+::selection { background: #19b9e7; color: #fff; text-shadow: none; }
+
+
+/*common*/
+
+.margin-top-class{
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.army-logo{
+    height: 150px;
+}
+
+.army-fingerprint{
+    height: 250px;
+}
+
+.mnq-heading{
+    margin-bottom: 100px;
+}
+
+.error-heading{
+    margin-top: 100px;
+}
+
+/*common end*/
+
+
+/*welcome form*/
+
+.welcome-container{
+	margin-top: 100px;
+  text-align: center;
+}
+
+.welcome-container img{
+	height: 200px;
+}
+
+/*welcome form end*/
+
+
+/*outbound-finger-print*/
+
+.outbound-finger-print{
+    margin-top: 100px;
+}
+
+/*outbound-finger-print end*/
+
+
+/*request-leave-inbound*/
+
+.request-leave-inbound{
+    margin-top: 100px;
+}
+
+/*request-leave-inbound end*/
+
+
+/*registration-in-out*/
+.registration-in-out{
+    margin-top: 100px;
+}
+
+/*registration-in-out end*/

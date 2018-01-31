@@ -1,0 +1,58 @@
+{% extends 'reg.html' %}
+{% load static %}
+{% block content %}
+    <div class="wrapper">
+        <div class="container margin-top-class">
+            <div class="row">
+                <div class="col-sm-8">
+                    <img src="{% static 'img/logo.svg' %}" class="army-logo">
+                </div>
+                <div class="col-sm-4">
+                    <h1>M&Q Directorate Bangladesh Army HQ</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1>Welcome <strong> {{ personal.rank }} {{ personal.first_name }} {{ personal.last_name }}</strong></h1>
+                    <h2>Please put your index finger on the right print scanner</h2>
+                </div>
+                <div class="col-sm-4">
+                    <img src="{% static 'img/finger.jpg' %}" class="army-fingerprint">
+                </div>
+            </div>
+
+{#            for test start#}
+            <form action="" method="post" hidden>
+                {% csrf_token %}
+                <input type="hidden" value="/fingerprint/location" name="fingerprint_location">
+                <button class="btn btn-success" type="submit" name="success" id="success">Read Success</button>
+                <button class="btn btn-danger" type="submit" name="fail" id="fail">Read Failed</button>
+            </form>
+{#            for test end #}
+            <!--Following buttons are for test perspective
+            <div class="row">
+                <div class="col-md-3" style="text-align: center; white-space: nowrap">These buttons are for test</div>
+                <div class="col-md-3">
+                    <a class="btn btn-success pull-left" href="/personal/matched/{{ personal.number }}">Found</a>
+                    <a class="btn btn-danger pull-right" href="{% url 'finger-print-not-matched' %}">Not found</a>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+            -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        socket = new WebSocket("ws://" + window.location.host + "/browser/");
+        socket.onmessage = function (e) {
+            console.log(e);
+            if(e["data"]=="match"){
+                document.getElementById("success").click();
+            } else if(e["data"]=="fails"){
+                document.getElementById("fail").click();
+            }
+        }
+    </script>
+{% endblock %}

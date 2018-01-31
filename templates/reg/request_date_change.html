@@ -1,0 +1,100 @@
+{% extends 'reg.html' %}
+{% load static %}
+
+{% block extrahead %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        <div class="container margin-top-class">
+            <div class="row">
+                <div class="col-sm-8">
+                    <img src="{% static 'img/logo.svg' %}" class="army-logo">
+                </div>
+                <div class="col-sm-4">
+                    <h1>M&Q Directorate Bangladesh Army HQ</h1>
+                </div>
+            </div>
+            <div class="row">
+                <form action="/personal/date-change/{{ id }}/" method="post" role="form">
+                    {% csrf_token %}
+                    <div class="col-sm-8">
+                        <h1 class="text-success">Please insert following data for move date change,Your current move
+                            date is
+                            DD/MM/YYYY </h1>
+                        <div class="form-group" style="display:none">
+                            <label for="id_request_by">Personal</label>
+                            <select id="id_request_by" name="request_by" class="form-control" required>
+                                {% for personal in personals %}
+                                    {% if personal.number == id %}
+                                        <option value="{{ personal.number }}"
+                                                selected>{{ personal.first_name }} {{ personal.last_name }}</option>
+                                    {% else %}
+                                        <option value="{{ personal.number }}">{{ personal.first_name }} {{ personal.last_name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {% for field in form %}
+                            <div class="form-group">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-sm-4">
+                        <p class="text-success">You will need to submit following documents along with this
+                            application</p>
+                        <table class="table table-borderd">
+                            <tr>
+                                <td>#</td>
+                                <td>List of Documents</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Document 1</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Document 2</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Document 3</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Document 4</td>
+                            </tr>
+                        </table>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Submit Application</button>
+                            <a class="btn btn-danger" href="/">Cancel and exit</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% if error %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1 class="text-danger">{{ error }}</h1>
+                    </div>
+                    <div class="col-sm-6">
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $('#id_new_date').datepicker({
+                format: "mm/dd/yyyy",
+                minDate: 0
+            });
+        });
+    </script>
+{% endblock %}

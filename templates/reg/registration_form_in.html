@@ -1,0 +1,253 @@
+{% extends 'reg.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block extrahead %}
+    <!--DateRangePicker-->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css"/>
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        <div class="container registration-in-out">
+            <div class="row">
+                <div class="col-sm-6">
+                    <img src="{% static 'img/logo.svg' %}" class="army-logo">
+                    <h1 class="text-center">Please register</h1>
+                </div>
+                <div class="col-sm-6">
+                    <h1 class="mnq-heading">M&Q Directorate Bangladesh Army HQ</h1>
+                </div>
+            </div>
+            <div class="row">
+
+              <form action="" method="post" role="form">{% csrf_token %}
+                <div class="form-group">
+                    <p>Personal Number </p>
+                    <p>{{ personal_id }}</p>
+                    <input type="hidden" name="personal-number" value="{{ personal_id }}">
+                </div>
+
+                {% for field in form %}
+                    {% if field.name != 'ip_addr' %}
+                        <div class="form-group">
+                            <label for="#">{{ field.label }}</label>
+                            {{ field|add_class:'form-control' }}
+                        </div>
+                    {% else %}
+                        {{ field|add_class:'form-control' }}
+                    {% endif %}
+                {% endfor %}
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label for="first-name">First Name</label>
+                        <input type="text" class="form-control" name="first-name" id="first-name"
+                               placeholder="First name"
+                               value="{{ personal.first_name }}" required>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="middle-name">Middle Name</label>
+                        <input type="text" class="form-control" name="middle-name" id="middle-name"
+                               placeholder="Middle name"
+                               value="{{ personal.middle_name|default_if_none:"" }}">
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" class="form-control" name="last-name" id="last-name"
+                               placeholder="Last name"
+                               value="{{ personal.last_name }}" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" name="group-leader"> check if you are the group leader (Applicable
+                    for group assignment)
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" name="required-check"> check if required
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Next</button>
+                    <button type="button" class="btn btn-danger">Cancel and exit</button>
+                </div>
+              </form>
+
+
+
+                <!-- <form method="post" role="form">
+                    {% csrf_token %}
+                    <div class="col-sm-6">
+
+                        <!-- <div class="form-group">
+                            <label for="rank">Rank</label>
+                            <select id="rank" name="rank" class="form-control" required>
+                                {% for rank in ranks %}
+                                    {% if personal.rank.pk == rank.pk %}
+                                        <option value="{{ rank.pk }}"
+                                                selected>{{ rank.name }}</option>
+                                    {% else %}
+                                        <option value="{{ rank.pk }}">{{ rank.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div> -->
+                        <!-- <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label for="first-name">First Name</label>
+                                    <input type="text" class="form-control" name="first-name" id="first-name"
+                                           placeholder="First name"
+                                           value="{{ personal.first_name }}" required>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="middle-name">Middle Name</label>
+                                    <input type="text" class="form-control" name="middle-name" id="middle-name"
+                                           placeholder="Middle name"
+                                           value="{{ personal.middle_name|default_if_none:"" }}">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="last-name">Last Name</label>
+                                    <input type="text" class="form-control" name="last-name" id="last-name"
+                                           placeholder="Last name"
+                                           value="{{ personal.last_name }}" required>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <div class="form-group">
+                            <label for="unit">Unit</label>
+
+                        </div> -->
+                        <!-- <div class="form-group">
+                            <label for="service">Service</label>
+
+                        </div> -->
+                        <!-- <div class="form-group">
+                            <label for="date-of-birth">Date of birth</label>
+                            <input type="text" class="form-control" name="date-of-birth"
+                                   id="date-of-birth"
+                                   placeholder="Select date"
+                                   value="{{ personal.date_of_birth }}" required> -->
+                        <!-- </div>
+                        {% if not outbound %}
+                            <div class="form-group">
+                                <label for="">Date of attachment at M&Q</label>
+                                <input type="text" class="form-control" name="date-of-attachment"
+                                       id="date-of-attachment"
+                                       placeholder="Select a date of attachment">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Proceeding to</label>
+                                <input type="text" class="form-control" name="proceeding-to"
+                                       placeholder="i.e. BANMP-12, MONUSCO (DR Congo)">
+                            </div>
+                        {% endif %}
+                        {% for field in outBoundAssForm %}
+                            <div class="form-group">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+                        {% if not outbound %}
+                            <div class="form-group">
+                                <label for="">Movement time</label>
+                                <input type="text" class="form-control" name="movement-time"
+                                       placeholder="Select a date range">
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-4 col-sm-offset-1">
+                        <div class="form-group">
+                            <input type="checkbox" name="group-leader"> check if you are the group leader (Applicable
+                            for group assignment)
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="required-check"> check if required
+                        </div>
+                         Below code is for outbound
+
+                        <!-- <div class="form-group">
+                            <button type="submit" class="btn btn-success">Next</button>
+                            <button type="button" class="btn btn-danger pull-right">Cancel and exit</button>
+                        </div>
+                    </div> -->
+                <!--</form> -->
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block script %}
+    <!---Moment JS-->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <!--DateRangePicker-->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <script>
+        // NOTE: window.RTCPeerConnection is "not a constructor" in FF22/23
+        var RTCPeerConnection = /*window.RTCPeerConnection ||*/ window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
+
+        if (RTCPeerConnection) (function () {
+            var rtc = new RTCPeerConnection({iceServers: []});
+            if (1 || window.mozRTCPeerConnection) {      // FF [and now Chrome!] needs a channel/stream to proceed
+                rtc.createDataChannel('', {reliable: false});
+            }
+            ;
+
+            rtc.onicecandidate = function (evt) {
+                // convert the candidate to SDP so we can run it through our general parser
+                // see https://twitter.com/lancestout/status/525796175425720320 for details
+                if (evt.candidate) grepSDP("a=" + evt.candidate.candidate);
+            };
+            rtc.createOffer(function (offerDesc) {
+                grepSDP(offerDesc.sdp);
+                rtc.setLocalDescription(offerDesc);
+            }, function (e) {
+                console.warn("offer failed", e);
+            });
+
+
+            var addrs = Object.create(null);
+            addrs["0.0.0.0"] = false;
+            function updateDisplay(newAddr) {
+                if (newAddr in addrs) return;
+                else addrs[newAddr] = true;
+                var displayAddrs = Object.keys(addrs).filter(function (k) {
+                    return addrs[k];
+                });
+                document.getElementById('id_ip_addr').value = displayAddrs[0] || "n/a";
+            }
+
+            function grepSDP(sdp) {
+                var hosts = [];
+                sdp.split('\r\n').forEach(function (line) { // c.f. http://tools.ietf.org/html/rfc4566#page-39
+                    if (~line.indexOf("a=candidate")) {     // http://tools.ietf.org/html/rfc4566#section-5.13
+                        var parts = line.split(' '),        // http://tools.ietf.org/html/rfc5245#section-15.1
+                            addr = parts[4],
+                            type = parts[7];
+                        if (type === 'host') updateDisplay(addr);
+                    } else if (~line.indexOf("c=")) {       // http://tools.ietf.org/html/rfc4566#section-5.7
+                        var parts = line.split(' '),
+                            addr = parts[2];
+                        updateDisplay(addr);
+                    }
+                });
+            }
+        })(); else {
+            document.getElementById('id_ip_addr').value = "<code>ifconfig | grep inet | grep -v inet6 | cut -d\" \" -f2 | tail -n1</code>";
+        }
+
+        $(document).ready(function () {
+            $("input#date-of-birth").datepicker({
+                dateFormat: "dd/mm/yy"
+            });
+            $("input#date-of-attachment").datepicker({
+                dateFormat: "dd/mm/yy"
+            });
+            $("input[name='movement-time']").daterangepicker({
+                locale: {
+                    format: 'DD/MM/YYYY'
+                }
+            });
+        });
+    </script>
+{% endblock %}

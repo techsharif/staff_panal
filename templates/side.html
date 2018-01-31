@@ -1,0 +1,65 @@
+<div class="sidebar">
+    <nav class="sidebar-nav">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'staff_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a>
+            </li>
+
+            <li class="nav-title">
+                Menu
+            </li>
+            <li class="divider"></li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class=""></i>
+                    Attendance
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'daily-attendance' %}"><i class=""></i>Daily attendance</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'missed-attendance' %}"><i class=""></i>Missed attendances</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class=""></i>
+                    Requests
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class=""></i>For date extension</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class=""></i>For date change</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class=""></i>For leave</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class=""></i>
+                    Protocols
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class=""></i>Add protocol</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class=""></i>Protocol list</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class=""></i>Settings</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'move-order' %}"><i class=""></i>Move orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'assignments' %}"><i class=""></i>Assignments</a>
+            </li>
+        </ul>
+    </nav>
+</div>

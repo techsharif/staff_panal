@@ -1,0 +1,84 @@
+{% extends 'reg.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+    <div class="wrapper">
+        <div class="container registration-in-out">
+            <div class="row">
+                <div class="col-sm-6">
+                    <img src="{% static 'img/logo.svg' %}" class="army-logo">
+                </div>
+                <div class="col-sm-6">
+                    <h1 class="mnq-heading">M&Q Directorate Bangladesh Army HQ</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1 class="text-success">Welcome
+                        back {{ personal.rank.name }} {{ personal.first_name }} {{ personal.last_name }}, You will need
+                        to submit following clearance in
+                        "10" days.
+                        Please collect your clearance paper from print desk. </h1>
+                    {% if extension %}
+                        <table class="table table-borderd">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Document</th>
+                                <th>Copy required</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if documents|length != 0 %}
+                                {% for doc in documents %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ doc.document_name }}</td>
+                                        <td>{{ doc.number_of_copy }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td>No documents required</td>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <table class="table table-borderd">
+                            <tr>
+                                <td>#</td>
+                                <td>Name of clearance</td>
+                                <td>Collection Point</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Clearance Name</td>
+                                <td>Office</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Clearance Name</td>
+                                <td>Office</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Clearance Name</td>
+                                <td>Office</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Clearance Name</td>
+                                <td>Office</td>
+                            </tr>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

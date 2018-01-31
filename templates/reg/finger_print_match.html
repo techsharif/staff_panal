@@ -1,0 +1,58 @@
+{% extends 'reg.html' %}
+{% load static %}
+{% block content %}
+    <div class="wrapper">
+        <div class="container margin-top-class">
+            <div class="row">
+                <div class="col-sm-8">
+                    <img src="{% static 'img/logo.svg' %}" class="army-logo">
+                </div>
+                <div class="col-sm-4">
+                    <h1>M&Q Directorate Bangladesh Army HQ</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <h2>Thank you <strong>{{ personal.rank.name }} {{ personal.first_name }} {{ personal.last_name }}
+                        !</strong></h2>
+                    <h2>Your attendance is successfully recorded.</h2>
+                </div>
+                <div class="col-sm-4">
+                    <img src="{% static 'img/finger.jpg' %}" class="army-fingerprint">
+                </div>
+            </div>
+            {% if outbound == True %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <a class="btn btn-primary pull-left" href="/personal/date-change/{{ personal.number }}/">Request assignment date change</a>
+                        <a class="btn btn-primary pull-right" href="/personal/move-order/{{ personal.number }}/">Request move order</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <button class="btn btn-warning pull-right">Exit</button>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <a class="btn btn-primary pull-left" href="/personal/move-order/{{ personal.number }}/">Request move order</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <h3 class="text-danger text-left">Clearance submission date remaining: 2</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <a class="btn btn-primary pull-left" href="/personal/leave-request/{{ personal.number }}/">Request Leave Card</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a class="btn btn-primary pull-left" href="/personal/clearance-extension/{{ personal.number }}/">Request Extension for clearance submission</a>
+                        <a class="btn btn-warning pull-right" href="/">Exit</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

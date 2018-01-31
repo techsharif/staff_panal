@@ -1,0 +1,77 @@
+{% extends 'reg.html' %}
+{% load static %}
+
+{% block extrahead %}
+    <!--DateRangePicker-->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css"/>
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        <div class="container margin-top-class">
+            <div class="row">
+                <form method="post" role="form">
+                    {% csrf_token %}
+                    <div class="col-sm-6">
+                        <img src="{% static 'img/logo.svg' %}" class="army-logo">
+                        <h3>Please insert the following information for leave application</h3>
+
+                        {% for field in form %}
+                            {% if field.label != 'Do you deserve this leave?' %}
+                                <div class="form-group">
+                                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    {{ field }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="form-group">
+                            <label for="">Date</label>
+                            <input type="text" class="form-control" name="date-range">
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-sm-offset-1">
+                        <h1 class="mnq-heading">M&Q Directorate Bangladesh Army HQ</h1>
+
+                        <div class="form-group">
+                            {% for field in form %}
+                                {% if field.label == 'Do you deserve this leave?' %}
+                                    {{ field }} check if you think you deserve this leave
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Submit leave application</button>
+                            <a type="button" class="btn btn-danger pull-right" href="/">Cancel and exit</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% if error %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1 class="text-danger">{{ error }}</h1>
+                    </div>
+                    <div class="col-sm-6">
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <!---Moment JS-->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <!--DateRangePicker-->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("input[name='date-range']").daterangepicker({
+                locale: {
+                    format: 'DD/MM/YYYY'
+                }
+            });
+        });
+    </script>
+{% endblock %}

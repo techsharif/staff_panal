@@ -1,0 +1,44 @@
+{% extends 'reg.html' %}
+{% load static %}
+{% block content %}
+    <div class="wrapper">
+        <div class="container margin-top-class">
+            <div class="row">
+                <div class="col-sm-8">
+                    <img src="{% static 'img/logo.svg' %}" class="army-logo">
+                </div>
+                <div class="col-sm-4">
+                    <h1>M&Q Directorate Bangladesh Army HQ</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1>Registration Successful</h1>
+                    <h2>Please put your right index finger on the right print scanner</h2>
+                </div>
+                <div class="col-sm-4">
+                    <img src="{% static 'img/finger.jpg' %}" class="army-fingerprint">
+                </div>
+            </div>
+            <form action="" method="post" hidden>
+                {% csrf_token %}
+                <input type="hidden" value="/fingerprint/location" name="fingerprint_location">
+                <button class="btn btn-success" type="submit" name="success" id="success">Enrolment Success</button>
+                <button class="btn btn-danger" type="submit" name="fail" id="fail">Enrolment Failed</button>
+            </form>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        socket = new WebSocket("ws://" + window.location.host + "/browser/");
+        socket.onmessage = function (e) {
+            console.log(e);
+            if(e["data"]=="success"){
+                document.getElementById("success").click();
+            }
+        }
+    </script>
+{% endblock %}

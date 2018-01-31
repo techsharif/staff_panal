@@ -1,0 +1,35 @@
+{% extends 'reg.html' %}
+{% load static %}
+{% block content %}
+<div class="wrapper">
+    <div class="container request-leave-inbound">
+        <div class="row">
+            <div class="col-sm-6">
+                <img src="{% static 'img/logo.svg' %}" class="army-logo">
+            </div>
+            <div class="col-sm-6">
+                <h1 class="mnq-heading">M&Q Directorate Bangladesh Army HQ</h1>
+            </div>
+        </div>
+        <div class="row">
+            <h1 class="text-center">Please select one</h1>
+            <div class="col-sm-6">
+                <a href="/personal/registration-form-out/{{ personal }}">
+                    <button type="button" class="btn btn-success pull-right"> <i class="fa fa-arrow-up" aria-hidden="true"></i> You are going abroad for an assignment  </button>
+                </a>
+            </div>
+            <div class="col-sm-6">
+                <a href="{% url 'registration_form_in' %}">
+                  <button type="button" class="btn btn-danger">
+                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                       You are returning from an assignment
+                  </button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

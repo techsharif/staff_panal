@@ -1,0 +1,179 @@
+{% extends 'reg.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block extrahead %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        <div class="container registration-in-out">
+            <div class="row">
+                <div class="col-sm-6">
+                    <img src="{% static 'img/logo.svg' %}" class="army-logo">
+                </div>
+                <div class="col-sm-6">
+                    <h1 class="mnq-heading">M&Q Directorate Bangladesh Army HQ</h1>
+                </div>
+            </div>
+            <div class="row">
+                <h3 class="text-center">Please register (Army number: {{ number }})</h3>
+            </div>
+            <hr>
+            <div class="row">
+                <form action="" method="post" role="form">
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label">{{ form.rank.label }}</label>
+                        <div class="col-sm-10">
+                            {{ form.rank.errors }}
+                            {{ form.rank }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label">{{ form.service.label }}</label>
+                        <div class="col-sm-10">
+                            {{ form.service.errors }}
+                            {{ form.service }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label">{{ form.current_unit.label }}</label>
+                        <div class="col-sm-10">
+                            {{ form.current_unit.errors }}
+                            {{ form.current_unit }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label">Name</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            {{ form.first_name.errors }}
+                            {{ form.first_name }}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ form.middle_name.errors }}
+                            {{ form.middle_name }}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ form.last_name.errors }}
+                            {{ form.last_name }}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ form.name_suffix.errors }}
+                            {{ form.name_suffix }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label">{{ form.date_of_birth.label }}</label>
+                        <div class="col-sm-10">
+                            {{ form.date_of_birth.errors }}
+                            {{ form.date_of_birth }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label"
+                               for="{{ form.contact_no.id_for_label }}">{{ form.contact_no.label }}</label>
+                        <div class="col-sm-10">
+                            {{ form.contact_no.errors }}
+                            {{ form.contact_no }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label"
+                               for="{{ form.emergency_no.id_for_label }}">{{ form.emergency_no.label }}</label>
+                        <div class="col-sm-10">
+                            {{ form.emergency_no.errors }}
+                            {{ form.emergency_no }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label">Passport (optional)</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            {{ form.passport_no.errors }}
+                            {{ form.passport_no }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ form.passport_expire.errors }}
+                            {{ form.passport_expire }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group row">
+                        <a class="btn btn-danger pull-left" href="/">Cancel and exit</a>
+                        <button type="submit" class="btn btn-success pull-right">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        // NOTE: window.RTCPeerConnection is "not a constructor" in FF22/23
+        var RTCPeerConnection = /*window.RTCPeerConnection ||*/ window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
+
+        if (RTCPeerConnection) (function () {
+            var rtc = new RTCPeerConnection({iceServers: []});
+            if (1 || window.mozRTCPeerConnection) {      // FF [and now Chrome!] needs a channel/stream to proceed
+                rtc.createDataChannel('', {reliable: false});
+            }
+            ;
+
+            rtc.onicecandidate = function (evt) {
+                // convert the candidate to SDP so we can run it through our general parser
+                // see https://twitter.com/lancestout/status/525796175425720320 for details
+                if (evt.candidate) grepSDP("a=" + evt.candidate.candidate);
+            };
+            rtc.createOffer(function (offerDesc) {
+                grepSDP(offerDesc.sdp);
+                rtc.setLocalDescription(offerDesc);
+            }, function (e) {
+                console.warn("offer failed", e);
+            });
+
+
+            var addrs = Object.create(null);
+            addrs["0.0.0.0"] = false;
+            function updateDisplay(newAddr) {
+                if (newAddr in addrs) return;
+                else addrs[newAddr] = true;
+                var displayAddrs = Object.keys(addrs).filter(function (k) {
+                    return addrs[k];
+                });
+                document.getElementById('id_ip_addr').value = displayAddrs[0] || "n/a";
+            }
+
+            function grepSDP(sdp) {
+                var hosts = [];
+                sdp.split('\r\n').forEach(function (line) { // c.f. http://tools.ietf.org/html/rfc4566#page-39
+                    if (~line.indexOf("a=candidate")) {     // http://tools.ietf.org/html/rfc4566#section-5.13
+                        var parts = line.split(' '),        // http://tools.ietf.org/html/rfc5245#section-15.1
+                            addr = parts[4],
+                            type = parts[7];
+                        if (type === 'host') updateDisplay(addr);
+                    } else if (~line.indexOf("c=")) {       // http://tools.ietf.org/html/rfc4566#section-5.7
+                        var parts = line.split(' '),
+                            addr = parts[2];
+                        updateDisplay(addr);
+                    }
+                });
+            }
+        })(); else {
+            document.getElementById('id_ip_addr').value = "<code>ifconfig | grep inet | grep -v inet6 | cut -d\" \" -f2 | tail -n1</code>";
+        }
+
+        $(document).ready(function () {
+            $("input.date-pick").datepicker({
+                dateFormat: "dd/mm/yy"
+            });
+        });
+    </script>
+{% endblock %}

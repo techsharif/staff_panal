@@ -1,0 +1,81 @@
+{% load static %}
+<div class="sidebar" data-color="blue" data-image="{% static 'img/full-screen-image-3.jpg' %}">
+    <!--
+
+        Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+        Tip 2: you can also add an image using data-image tag
+
+    -->
+
+    <div class="logo">
+        <a href="http://itsd.com.bd" class="logo-text">
+            ITSD SMS Service
+        </a>
+    </div>
+    <div class="logo logo-mini">
+        <a href="http://www.itsd.com.bd" class="logo-text">
+            ITSD SMS Service
+        </a>
+    </div>
+
+    <div class="sidebar-wrapper">
+
+
+        <ul class="nav">
+            <li>
+                <a href="">
+                    <i class="pe-7s-graph"></i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <i class="fa fa-plus"></i>
+                    <p>Add Client</p>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <i class="fa fa-list"></i>
+                    <p>Contacts</p>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <i class="fa fa-group"></i>
+                    <p>Groups</p>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <i class="fa fa-address-card-o"></i>
+                    <p>Admin Contacts</p>
+                </a>
+            </li>
+
+
+            <li>
+                <a data-toggle="collapse" href="#add_contact">
+                    <i class="fa fa-plus"></i>
+                    <p>Add Contact
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse" id="add_contact">
+                    <ul class="nav">
+
+                        <li><a href="">
+                            <i class="fa fa-plus"></i>
+                            Single Contact</a></li>
+                        <li><a href="">
+                            <i class="fa fa-plus"></i>
+                            Bulk</a></li>
+
+                    </ul>
+                </div>
+            </li>
+
+
+        </ul>
+    </div>
+</div>
