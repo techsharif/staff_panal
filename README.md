@@ -1,8 +1,12 @@
 # staff_panal
 
-###clone this repository 
+### clone this repository 
 
 `git clone https://github.com/techsharif/staff_panal.git`
+
+### go to project directory
+
+`cd staff_panal`
 
 ### create virtual venv
 
