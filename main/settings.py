@@ -16,6 +16,7 @@ ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = ['127.0.0.1']
 
 INSTALLED_APPS = [
+    'itsd_admin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -25,7 +26,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'staff_panel',
     'rest_framework',
-    'mathfilters'
+    'mathfilters',
 ]
 
 MIDDLEWARE = [
