@@ -1,12 +1,16 @@
 # staff_panal
 
-###clone this repository 
+### clone this repository 
 
 `git clone https://github.com/techsharif/staff_panal.git`
 
+### go to project directory
+
+`cd staff_panal`
+
 ### create virtual venv
 
-`virtualenv -p python3 envname`
+`virtualenv -p python3 venv`
 
 [ if error try ]
 ```
